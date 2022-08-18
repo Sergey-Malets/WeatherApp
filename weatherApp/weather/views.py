@@ -5,3 +5,6 @@ def index(request):
 
 def new_URL(request):
     return render(request, "weather/new_url.html")
+
+def index_2(request):
+    return render(request, 'weather/index_2.html')
