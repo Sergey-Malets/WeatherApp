@@ -24,13 +24,22 @@
                 <input type="text" id="city" class="form-control" nane="city" placeholder="Введите город">
                 <input type="submit" name="send" value="Узнать" class="mt-2 btn-danger">
             </form>
+        </div>
             <div class="col-4 offset-1">
                 <h1>Информация</h1>
-                <div class="alert alert-danger">
-                    Погода в Минске
+                <div class="alert alert-info">
+                    <div class="row">
+                        <div class="col-9">
+                            <b>Город:</b>{{ info.city }}<br>
+                            <b>Температура:</b>{{ info.temp }}<sup>0</sup><br>
+                        </div>
+                        <div class="col-2 offset-1">
+                            <img src="http://openweathermap.org/img/w/{{ info.icon }}.png" alt="Фото погоды">
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+
     </div>
 </div>
 
