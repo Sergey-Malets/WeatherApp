@@ -1,22 +1,36 @@
 from django.shortcuts import render
 import requests
+from .models import City
+from .forms import CityForm
 
 
 def index(request):
     appid = "22157536b45f94e241c43cc5f22072da"
     url = "https://api.openweathermap.org/data/2.5/weather?q={}&units=metric&appid=" + appid
 
-    city = 'London'
-    res = requests.get(url.format(city)).json()
-    res2 = requests.get(url.format('Minsk'))
+    if (request.method == 'POST'):
+        form = CityForm(request.POST)
+        form.save()
 
-    city_info={
-        'city': city,
-        'temp':res['main']['temp'],
-    'icon': res['weather'][0]['icon']
-    }
+    form = CityForm
+
+    cities = City.objects.all()
+
+    all_cites = []
+
+    for city in cities:
+        res = requests.get(url.format(city)).json()
+
+        city_info = {
+            'city': city,
+            'temp': res['main']['temp'],
+            'icon': res['weather'][0]['icon']
+        }
+        all_cites.append(city_info)
+
     context = {
-        'info': city_info
+        'all_info': all_cites,
+        'form': form,
     }
 
     return render(request, 'weather/index.html', context)
@@ -24,22 +38,38 @@ def index(request):
 def new_URL(request):
     return render(request, "weather/new_url.html")
 
-def index_2(request):
+def index_3(request):
     appid = "22157536b45f94e241c43cc5f22072da"
     url = "https://api.openweathermap.org/data/2.5/weather?q={}&units=metric&appid=" + appid
 
-    city = 'London'
-    res = requests.get(url.format(city)).json()
+    if (request.method == 'POST'):
+        form = CityForm(request.POST)
+        form.save()
 
-    city_info = {
-        'city': city,
-        'temp': res['main']['temp'],
-        'icon': res['weather'][0]['icon'],
-        'feels_like': res['main']['feels_like'],
-        'wind': res['wind']['speed'],
-    }
+    form = CityForm
+
+    cities = City.objects.all()
+
+    all_cites = []
+
+    for city in cities:
+        res = requests.get(url.format(city)).json()
+
+        city_info = {
+            'city': city,
+            'temp': res['main']['temp'],
+            'icon': res['weather'][0]['icon'],
+            'feels_like': res['main']['feels_like'],
+            'wind': res['wind']['speed'],
+            "description": res['weather'][0]['description'],
+            'country': res['sys']['country']
+
+        }
+        all_cites.append(city_info)
+
     context = {
-        'info': city_info
+        'all_info': all_cites,
+        'form': form,
     }
 
-    return render(request, 'weather/index_2.html', context)
+    return render(request, 'weather/index_3.html', context)
