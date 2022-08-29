@@ -6,3 +6,10 @@ class City(models.Model):
 
     def __str__(self):
         return self.name
+
+class OpenWeatherMap(models.Model):
+    appid = models.CharField(max_length=50)
+    url = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.url

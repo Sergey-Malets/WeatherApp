@@ -12,6 +12,11 @@
                             <img src="http://openweathermap.org/img/w/{{ info.icon }}.png" alt="Фото погоды">
                         </div>
                     </div>
+                    <div class="media-right">
+                        <a href="{% url 'delete_city' info.city %}">
+                            <button class="delete">Удалить</button>
+                        </a>
+                    </div>
                 </div>
                 {% endfor %}
 {% endblock %}
