@@ -1,0 +1,31 @@
+{% extends 'weather/base.html' %}
+{% block title %}Информация{% endblock %}
+{% block content %}
+<div class="col-8 offset-1">
+    <h1>Информация</h1>
+    {% for info in all_info %}
+    <div class="alert alert-info">
+                    <div class="row">
+                        <div class="col-6">
+                            <b>Город: {{ info.name }}</b> (код страны {{ info.country }})<br>
+                            <b>Температура: {{ info.temperature }}<sup>0</sup></b><br>
+                            <b>Скорость ветра: {{ info.wind }} м/с</b><br>
+                            <time>Время запроса:{{ info.date| date:"d.m.Y h:i" }}</time><br>
+                            <div class="media-right">
+                                <a href="{% url 'delete_city' info.id %}">
+                                    <button class="delete">Удалить</button>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-4 offset-1">
+                            <b>Погода: {{ info.description }}</b><br>
+                            <img src="http://openweathermap.org/img/w/{{ info.icon }}.png" alt="Фото погоды"><br>
+                            <b>Ощущается как {{ info.feels_like }}<sup>0</sup></b><br>
+
+                        </div>
+                    </div>
+                </div>
+
+    {% endfor %}
+</div>
+{% endblock %}
